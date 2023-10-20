@@ -104,6 +104,8 @@ create table quartos (
 
 describe quartos;
 
+alter table quartos add column numeroQuarto varchar(10) not null after andar;
+
 
 
 
