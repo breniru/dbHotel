@@ -53,4 +53,22 @@ select * from funcionarios;
 update funcionarios set login = "fellipecoelho" where idFunc = 10; 
 
 update funcionarios set cargo = "Gerencia" where idFunc = 4; 
+
+/* Adicionar o campo email à tabela funcionarios */
+alter table funcionarios add column email varchar(50);
+
+/* Excluir um campo da tabela */
+alter table funcionarios drop column email;
+
+/*Modificar o campo email para que se torne obrigatório, ou seja, não nulo (not null) */
+alter table funcionarios modify column email varchar(50) not null;
+
+/*Reposicionar o campo email para que ele fique após o campo login */
+alter table funcionarios modify column email varchar(50) not null after login;
+
+/* Buscar o login e a senha da tabela funcionarios em que login seja admin e senha seja admin */
+select login as Batata, senha as Senha from funcionarios where login = "admin" and senha = md5("admin");
+
+
+
     
