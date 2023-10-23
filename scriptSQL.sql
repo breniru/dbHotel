@@ -53,8 +53,6 @@ update funcionarios set login = "fellipecoelho" where idFunc = 6;
 update funcionarios set cargo = "Gerencia" where idFunc = 3; 
 update funcionarios set cargo = "Gerencia" where idFunc = 4; 
 
-
-
 /* Adicionar o campo email à tabela funcionarios */
 alter table funcionarios add column email varchar(50);
 
@@ -105,14 +103,46 @@ create table quartos (
 describe quartos;
 
 alter table quartos add column numeroQuarto varchar(10) not null after andar;
+alter table quartos add column cafeDaManha char(3) not null after preco;
+alter table quartos add column foto varchar(255) not null after descricao;
+
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, tipoCama, varanda) values ("5º", "505", "Superior Premier", 3, "não", "Familiar", "O quarto de 32m² com piso frio, varanda - vista para o mar. Oferece ar condicionado individual, TV LCD 42'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.", "https://imagens-revista.vivadecora.com.br/uploads/2019/05/quarto-de-hotel-decorado-em-cores-neutras-com-amplas-janelas.jpg", 750.90, "sim", "Queen Size", "sim");
+
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, tipoCama, varanda) values ("7º", "703", "Superior Premier Twin", 5, "sim", "Familiar", "O quarto de 54m² com piso frio, varanda - vista para o mar. Oferece ar condicionado individual, TV LCD 64'', Playstation 5, wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo, chapinha e amenities e mesa de trabalho.", "https://www.revistasim.com.br/wp-content/uploads/2021/03/revistaSIM_Arquitetura_Quarto-de-hotel-em-casa_Destaque_Credito_Eduardo-Pozella-1155x500.jpg", 1150.90, "sim", "King Size", "sim");
+
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, tipoCama, varanda) values ("2º", "203", "Classic Premier", 2, "não", "Familiar", "O quarto de 84m² com piso frio, varanda - vista para o mar. Oferece ar condicionado individual, TV LCD 32'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.", "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", "Queen Size", "sim");
 
 
+select * from quartos;
+
+select * from quartos where situacao = "não";
+
+select * from quartos where situacao = "não" and cafeDaManha = "sim";
+
+select * from quartos where situacao = "não" and cafeDaManha = "sim" and varanda = "sim";
+
+select * from quartos where preco < 700.00 and situacao = "não";
+
+select * from quartos where situacao = "não" order by preco asc;
 
 
+create table clientes (
+	idCliente int primary key auto_increment,
+    nomeCompleto varchar(100) not null,
+    cpf char(14) not null unique, 
+    rg char(14) not null unique,
+	email varchar(50) unique,
+    celular varchar(30) not null,
+    numeroCartao varchar(20) not null unique,
+    nomeTitular varchar(100) not null,
+    validade date not null,
+    cvv char(3) not null,
+    checkin datetime not null,
+    checkout datetime not null,
+    idQuarto int not null,
+    foreign key (idQuarto) references quartos (idQuarto)
+);
 
-
-
-
-
+describe clientes;
 
     
