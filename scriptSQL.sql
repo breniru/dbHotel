@@ -1,6 +1,6 @@
 /* Mostrar os bancos de dados existentes no servidor */
 show databases;
-
+show tables;
 /* Criar um novo banco */
 create database dbHotel;
 
@@ -145,4 +145,23 @@ create table clientes (
 
 describe clientes;
 
-    
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values
+("José de Assis", "829.942.570-09",  "48.353.888-7", "josedeassis@gmail.com", "(96) 99338-2003", "5526 4863 8286 2543", "José de Assis", "2025-03-31",
+ "452", "2023-11-02 14:00:00", "2023-11-05 12:00:00", 1); 
+
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values
+("Maria das Graças", "925.042.518-71",  "68.814.376-3", "mariadasgracas@gmail.com", "(11) 93629-1094", "9226 4156 2256 1543", "Maria das Graças", "2027-08-31",
+ "368", "2023-11-07 17:30:25", "2023-11-12 12:30:00", 3);    
+ 
+ select * from clientes;
+ 
+  /* Buscar TODAS AS INFORMAÇÕES da tabela quartos que está vincula à tabela clientes pelo campo idQuarto */
+ select * from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto;
+ 
+ /* Buscar o nome completo e o celular de clientes que alugou o quarto de número 505, pois a tabela quartos está vinculada à tabela clientes pelo campo idQuarto*/
+ select clientes.nomeCompleto, clientes.celular from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto where numeroQuarto = 505;
+ 
+ /* Buscar o nome completo e data/horário de checkout do cliente que alugou o quarto de número 505*/
+ select clientes.nomeCompleto, date_format(clientes.checkout, '%d/%m/%Y - %H:%i	:%s') as Checkout from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto where numeroQuarto = 505;
+ 
+/* ATIVIDADE AVALIATIVA */
