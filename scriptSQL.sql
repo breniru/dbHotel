@@ -125,6 +125,32 @@ select * from quartos where preco < 700.00 and situacao = "não";
 
 select * from quartos where situacao = "não" order by preco asc;
 
+drop table pedido;
+
+create table pedido (
+	idPedido int primary key auto_increment,
+    dataPedido timestamp default current_timestamp,
+    statusPedido enum("Pendente", "Finalizado", "Cancelado") not null,
+    idCliente int not null,
+    foreign key (idCliente) references clientes(idCliente)
+);
+
+insert into pedido (statusPedido, idCliente) values ("Pendente", 1);
+insert into pedido (statusPedido, idCliente) values ("Finalizado", 2);
+
+select * from pedido;
+
+describe pedido;
+
+create table reservas (
+	idReserva int primary key auto_increment,
+    idPedido int not null,
+    idQuarto int not null,
+    foreign key (idPedido) references pedido(idPedido),
+    foreign key (idQuarto) references quartos(idQuarto)
+);
+
+describe reservas;
 
 create table clientes (
 	idCliente int primary key auto_increment,
@@ -138,22 +164,24 @@ create table clientes (
     validade date not null,
     cvv char(3) not null,
     checkin datetime not null,
-    checkout datetime not null,
-    idQuarto int not null,
-    foreign key (idQuarto) references quartos (idQuarto)
+    checkout datetime not null
 );
+
+ select * from clientes;
+
+drop table clientes;
 
 describe clientes;
 
-insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout) values
 ("José de Assis", "829.942.570-09",  "48.353.888-7", "josedeassis@gmail.com", "(96) 99338-2003", "5526 4863 8286 2543", "José de Assis", "2025-03-31",
- "452", "2023-11-02 14:00:00", "2023-11-05 12:00:00", 1); 
+ "452", "2023-11-02 14:00:00", "2023-11-05 12:00:00"); 
 
-insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout) values
 ("Maria das Graças", "925.042.518-71",  "68.814.376-3", "mariadasgracas@gmail.com", "(11) 93629-1094", "9226 4156 2256 1543", "Maria das Graças", "2027-08-31",
- "368", "2023-11-07 17:30:25", "2023-11-12 12:30:00", 3);    
+ "368", "2023-11-07 17:30:25", "2023-11-12 12:30:00");    
  
- select * from clientes;
+
  
   /* Buscar TODAS AS INFORMAÇÕES da tabela quartos que está vincula à tabela clientes pelo campo idQuarto */
  select * from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto;
