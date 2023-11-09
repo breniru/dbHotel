@@ -98,7 +98,7 @@ insert into itensPedidos (idPedido, idProduto, quantidade) values (1, 2, 2);
 select idPedido from pedidos;
 select * from itensPedidos;
 
-select pedidos.idPedido, produtos.idProduto, clientes.nomeCliente, produtos.nomeProduto, produtos.precoProduto
+select pedidos.idPedido, produtos.idProduto, clientes.nomeCliente, produtos.nomeProduto, produtos.precoProduto,itensPedidos.quantidade
 from (itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido)
 inner join produtos on itensPedidos.idProduto = produtos.idProduto 
 inner join clientes on pedidos.idCliente = clientes.idCliente;
@@ -108,7 +108,6 @@ inner join clientes on pedidos.idCliente = clientes.idCliente;
 select pedidos.idPedido, clientes.nomeCliente from pedidos inner join clientes on pedidos.idCliente = clientes.idCliente;
 
 select pedidos.idPedido, itensPedidos.idItensPedido from pedidos inner join itensPedidos on pedidos.idPedido = itensPedidos.idPedido;
-
 
 select itensPedidos.idItensPedido, itensPedidos.quantidade, produtos.idProduto, produtos.nomeProduto, produtos.precoProduto from itensPedidos inner join produtos
 on itensPedidos.idProduto = produtos.idProduto;
