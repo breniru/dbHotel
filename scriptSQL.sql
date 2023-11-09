@@ -69,6 +69,16 @@ insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nom
  individual, TV LCD 32'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.",
  "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", 60.00, "Queen Size", "sim");
  
+ insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
+ ("2º", "205", "Classic Premier", 2, "não", "Familiar", "O quarto de 84m² com piso frio, varanda - vista para o mar. Oferece ar condicionado
+ individual, TV LCD 32'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.",
+ "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", 60.00, "Queen Size", "sim");
+ 
+ insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
+ ("6º", "603", "Classic Premier", 2, "não", "Familiar", "O quarto de 84m² com piso frio, varanda - vista para o mar. Oferece ar condicionado
+ individual, TV LCD 32'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.",
+ "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", 60.00, "Queen Size", "sim");6
+ 
 select * from quartos;
 select * from quartos where situacao = "não";
 select * from quartos where situacao = "não" and cafeDaManha = "sim";
@@ -125,8 +135,25 @@ describe reservas;
 
 insert into reservas (idPedido, idQuarto, checkin, checkout) values (1, 1, "2023-11-02 14:00:00", "2023-11-05 12:00:00");
 insert into reservas (idPedido, idQuarto, checkin, checkout) values (1, 3, "2023-11-02 14:00:00", "2023-11-05 12:00:00");
+insert into reservas (idPedido, idQuarto, checkin, checkout) values (2, 2, "2023-11-09 14:00:00", "2023-11-13 12:00:00");
 
 select * from reservas;
 select reservas.idReserva, pedido.idPedido, quartos.idQuarto, quartos.nome, quartos.andar, quartos.numeroQuarto
- from (reservas inner join pedido on reservas.idPedido = pedido.idPedido)
- inner join quartos on reservas.idQuarto = quartos.idQuarto;
+from (reservas inner join pedido on reservas.idPedido = pedido.idPedido)
+inner join quartos on reservas.idQuarto = quartos.idQuarto;
+
+/*OBJETIVO: selecionar o nome do cliente, seu cpf e email, id do pedido do cliente, a data do pedido, quais quartos fazem parte desse pedido, 
+os tipos dos quartos e seus nomes, assim como os andares em que estão, os números de cada quarto, e suas datas de checkin e checkout. */
+
+select clientes.nomeCompleto, clientes.cpf, clientes.email, pedido.idPedido, pedido.dataPedido, quartos.tipoQuarto,
+ quartos.nome, quartos.numeroQuarto, quartos.preco, reservas.checkin, reservas.checkout from clientes inner join pedido on
+ clientes.idCliente = pedido.idCliente inner join reservas on reservas.idPedido = pedido.idPedido inner join quartos on
+ reservas.idQuarto = quartos.idQuarto;
+ 
+ /* OBJETIVO: somar o total que o cliente deverá pagar ao concluir e pedido dos quartos */
+ 
+select sum(quartos.preco) as Total from reservas inner join quartos on reservas.idQuarto = quartos.idQuarto where idPedido = 2;
+ 
+select sum(quartos.preco) as Total from reservas inner join quartos on reservas.idQuarto = quartos.idQuarto;
+ 
+ 
