@@ -1,7 +1,7 @@
 /* Atividade da Padaria */
-create database dbPadaria;
+create database dbPadariaBreno;
 
-use dbPadaria;
+use dbPadariaBreno;
 
 create table fornecedores (
 	idFornecedor int primary key auto_increment,
@@ -28,6 +28,9 @@ create table produtos (
 	idProduto int primary key auto_increment,
     nomeProduto varchar(50) not null,
     descricaoProduto text,
+    ingredientesProduto text,
+    pesoProduto decimal(10,2),
+    validadeProduto date,
     precoProduto decimal(10,2) not null,
     estoqueProduto int not null,
     categoriaProduto enum("Pães", "Bolos", "Confeitaria", "Salgados"),
@@ -35,17 +38,34 @@ create table produtos (
     foreign key (idFornecedor) references fornecedores(idFornecedor)
 );
 
+alter table produtos add ingredientesProduto text after descricaoProduto;
+alter table produtos add pesoProduto decimal(10,2) after ingredientesProduto;
+alter table produtos add validadeProduto date after pesoProduto;
+
+update produtos set ingredientesProduto = "farinha de aveia" where idProduto = 1;
+update produtos set ingredientesProduto = "farinha de trigo" where idProduto = 5;
+
 describe produtos;
 
 insert into produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor)
-values ("Pão Francês", "O pão francês é um pão de tamanho médio, geralmente com uma crosta crocante e um miolo macio.", 0.50, 100, "Pães", 1); 
+values ("Pão Integral", "O pão francês é um pão de tamanho médio, geralmente com uma crosta crocante e um miolo macio.", 0.50, 100, "Pães", 1); 
 
 insert into produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor)
 values ("Bolo de Chocolate", "Bolo sabor chocolate, com uma massa super macia e uma calda de chocolate por cima.", 45.00, 20, "Bolos", 1);
 
+insert into produtos (nomeProduto, ingredientesProduto, pesoProduto, validadeProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor) values
+("Coxinha", "sem glúten", 300.00, "2023-12-07", 8.90, 10, "Salgados", 1);
+
+insert into produtos (nomeProduto, ingredientesProduto, pesoProduto, validadeProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor) values
+("Bolinho de Queijo", "sem lactose", 120.00, "2023-12-07", 13.90, 5, "Salgados", 1);
+
+insert into produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor)
+values ("Pão Francês", "O pão francês é um pão de tamanho médio, geralmente com uma crosta crocante e um miolo macio.", 0.50, 100, "Pães", 1); 
+
 select * from produtos;
 select * from produtos where categoriaProduto = "Pães";
 select * from produtos where precoProduto < 50.00 order by precoProduto asc;
+
 
 create table clientes (
 	idCliente int primary key auto_increment,
@@ -98,16 +118,22 @@ insert into itensPedidos (idPedido, idProduto, quantidade) values (1, 2, 2);
 select idPedido from pedidos;
 select * from itensPedidos;
 
-select pedidos.idPedido, produtos.idProduto, clientes.nomeCliente, produtos.nomeProduto, produtos.precoProduto,itensPedidos.quantidade
-from (itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido)
-inner join produtos on itensPedidos.idProduto = produtos.idProduto 
+select nomeCliente, pedidos.idPedido, dataPedido, produtos.idProduto, nomeProduto, quantidade, precoProduto
+from itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido
+inner join produtos on itensPedidos.idProduto = produtos.idProduto
 inner join clientes on pedidos.idCliente = clientes.idCliente;
 
+select sum(produtos.precoProduto * itensPedidos.quantidade) as Total from produtos inner join itensPedidos on produtos.idProduto = itensPedidos.idProduto where idPedido = 1;
 
+/* Filtrar produtos por validade (por exemplo, produtos com validade maior que a data do sistema) */
+select * from produtos where validadeProduto > curdate();
 
-select pedidos.idPedido, clientes.nomeCliente from pedidos inner join clientes on pedidos.idCliente = clientes.idCliente;
+/* Filtrar produtos que contenham um ingrediente específico */
+select * from produtos where ingredientesProduto like '%glúten%';
 
-select pedidos.idPedido, itensPedidos.idItensPedido from pedidos inner join itensPedidos on pedidos.idPedido = itensPedidos.idPedido;
+/* ATIVIDADE: FILTRAR PÃES QUE NÃO SEJAM FEITOS À BASE DE FARINHA DE TRIGO, COM VALOR ATÉ 7.90 */
 
-select itensPedidos.idItensPedido, itensPedidos.quantidade, produtos.idProduto, produtos.nomeProduto, produtos.precoProduto from itensPedidos inner join produtos
-on itensPedidos.idProduto = produtos.idProduto;
+select * from produtos where ingredientesProduto like "%trigo%" and precoProduto < 7.90;
+select * from produtos where ingredientesProduto like "%aveia%" and precoProduto < 7.90;
+select * from produtos where ingredientesProduto not like "%trigo%" and precoProduto < 7.90;
+

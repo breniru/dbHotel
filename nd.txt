@@ -1,0 +1,4 @@
+select nomeCliente, pedidos.idPedido, dataPedido, produtos.idProduto, nomeProduto, quantidade, precoProduto
+from itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido
+inner join produtos on itensPedidos.idProduto = produtos.idProduto
+inner join clientes on pedidos.idCliente = clientes.idCliente;
