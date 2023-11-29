@@ -39,7 +39,7 @@ create table quartos (
     numeroQuarto varchar(50) not null,
     tipoQuarto varchar(50) not null,
     ocupacaoMax int not null,
-    situacao char(3) not null,
+    disponibilidade char(3) not null,
     nome varchar(50) not null, 
     descricao text, 
     foto varchar(255) not null,
@@ -52,39 +52,39 @@ create table quartos (
 
 describe quartos;
 
-insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, disponibilidade, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
  ("5º", "505", "Superior Premier", 3, "não", "Familiar", "O quarto de 32m² com piso frio, varanda - vista para o mar. Oferece ar condicionado
  individual, TV LCD 42'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.",
  "https://imagens-revista.vivadecora.com.br/uploads/2019/05/quarto-de-hotel-decorado-em-cores-neutras-com-amplas-janelas.jpg", 750.90, "sim",
  60.00, "Queen Size", "sim");
 
-insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, disponibilidade, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
  ("7º", "703", "Superior Premier Twin", 5, "sim", "Familiar", "O quarto de 54m² com piso frio, varanda - vista para o mar. Oferece ar condicionado
  individual, TV LCD 64'', Playstation 5, wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo, chapinha e amenities e mesa de trabalho.",
  "https://www.revistasim.com.br/wp-content/uploads/2021/03/revistaSIM_Arquitetura_Quarto-de-hotel-em-casa_Destaque_Credito_Eduardo-Pozella-1155x500.jpg",
  1150.90, "sim", 60.00, "King Size", "sim");
 
-insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
+insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, disponibilidade, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
  ("2º", "203", "Classic Premier", 2, "não", "Familiar", "O quarto de 84m² com piso frio, varanda - vista para o mar. Oferece ar condicionado
  individual, TV LCD 32'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.",
  "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", 60.00, "Queen Size", "sim");
  
- insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
+ insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, disponibilidade, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
  ("2º", "205", "Classic Premier", 2, "não", "Familiar", "O quarto de 84m² com piso frio, varanda - vista para o mar. Oferece ar condicionado
  individual, TV LCD 32'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.",
  "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", 60.00, "Queen Size", "sim");
  
- insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
+ insert into quartos (andar, numeroQuarto, tipoQuarto, ocupacaoMax, disponibilidade, nome, descricao, foto, preco, cafeDaManha, precoCafe, tipoCama, varanda) values
  ("6º", "603", "Classic Premier", 2, "não", "Familiar", "O quarto de 84m² com piso frio, varanda - vista para o mar. Oferece ar condicionado
  individual, TV LCD 32'', wi-fi grátis, cofre digital, frigobar abastecido e banheiro com secador de cabelo e amenities e mesa de trabalho.",
- "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", 60.00, "Queen Size", "sim");6
+ "https://i.pinimg.com/736x/54/99/8d/54998daa4afc482a4b42b1dd7a9a53b4.jpg", 650.90, "sim", 60.00, "Queen Size", "sim");
  
 select * from quartos;
-select * from quartos where situacao = "não";
-select * from quartos where situacao = "não" and cafeDaManha = "sim";
-select * from quartos where situacao = "não" and cafeDaManha = "sim" and varanda = "sim";
-select * from quartos where preco < 700.00 and situacao = "não";
-select * from quartos where situacao = "não" order by preco asc;
+select * from quartos where dispolibilidade = "não";
+select * from quartos where dispolibilidade = "não" and cafeDaManha = "sim";
+select * from quartos where dispolibilidade = "não" and cafeDaManha = "sim" and varanda = "sim";
+select * from quartos where preco < 700.00 and disponibilidade = "não";
+select * from quartos where dispolibilidade = "não" order by preco asc;
  
  create table clientes (
 	idCliente int primary key auto_increment,
@@ -135,7 +135,7 @@ describe reservas;
 
 insert into reservas (idPedido, idQuarto, checkin, checkout) values (1, 1, "2023-11-02 14:00:00", "2023-11-05 12:00:00");
 insert into reservas (idPedido, idQuarto, checkin, checkout) values (1, 3, "2023-11-02 14:00:00", "2023-11-05 12:00:00");
-insert into reservas (idPedido, idQuarto, checkin, checkout) values (2, 2, "2023-11-09 14:00:00", "2023-11-13 12:00:00");
+insert into reservas (idPedido, idQuarto, checkin, checkout) values (2, 2, "2023-11-27 10:00:00", "2023-12-08 10:00:00");
 
 select * from reservas;
 select reservas.idReserva, pedido.idPedido, quartos.idQuarto, quartos.nome, quartos.andar, quartos.numeroQuarto
@@ -156,4 +156,33 @@ select sum(quartos.preco) as Total from reservas inner join quartos on reservas.
  
 select sum(quartos.preco) as Total from reservas inner join quartos on reservas.idQuarto = quartos.idQuarto;
  
- 
+ /* Cliente Maria das Graças - idPedido 2
+ Quarto reservado: Superior Premier Twin (7º andar, número 703, preço/diária: R% 1150,90
+ Check-in: 27-11-2023 às 10:00
+ Check-out: 08-12-2023 às 10:00
+ */
+
+/*Buscar o ome do cliente, andar, número do quarto e checkout somente daqueles
+cuja data do checkout já passou ou é igual à data do sistema*/
+select pedido.idPedido, clientes.nomeCompleto, quartos.andar, quartos.numeroQuarto, reservas.checkout from
+clientes inner join pedido on clientes.idCliente = pedido.idCliente inner join
+reservas on reservas.idPedido = pedido.idPedido inner join quartos
+on reservas.idQuarto = quartos.idQuarto where reservas.checkout <= current_timestamp();
+
+ /*Atualizar a disponibilidade do quarto somente daqueles cuja data  do checkout já pssou ou é igual à data do sistema*/
+update reservas inner join quartos on reservas.idQuarto = quartos.idQuarto
+set quartos.disponibilidade = "sim" where reservas.checkout < current_timestamp();
+
+/*Buscar o ome do cliente, andar, número do quarto e checkout(com data formatada em 99/99/9999) e
+o cálculo de quantos dias faltam para a reserva do cliente encerrar (dias restantes = data do checkout - data de hoje) */
+select pedido.idPedido, clientes.nomeCompleto, quartos.andar, quartos.numeroQuarto,
+date_format(reservas.checkout, '%d/%m/%Y') as checkout, datediff(reservas.checkout, curdate()) as dias_restantes
+from clientes inner join pedido on clientes.idCliente = pedido.idCliente inner join
+reservas on reservas.idPedido = pedido.idPedido inner join quartos
+on reservas.idQuarto = quartos.idQuarto where reservas.checkout > current_timestamp();
+
+select pedido.idPedido, clientes.nomeCompleto, quartos.andar, quartos.numeroQuarto,
+date_format(reservas.checkout, '%d/%m/%Y') as checkout, datediff(reservas.checkout, curdate()) as dias_restantes
+from clientes inner join pedido on clientes.idCliente = pedido.idCliente inner join
+reservas on reservas.idPedido = pedido.idPedido inner join quartos
+on reservas.idQuarto = quartos.idQuarto;
